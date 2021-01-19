@@ -2,7 +2,6 @@
  * WordPress dependencies
  */
 import { createReduxStore, register } from '@wordpress/data';
-import { controls } from '@wordpress/data-controls';
 
 /**
  * Internal dependencies
@@ -13,7 +12,6 @@ import * as actions from './actions';
 import * as resolvers from './resolvers';
 import * as locksSelectors from './locks/selectors';
 import * as locksActions from './locks/actions';
-import customControls from './controls';
 import { defaultEntities, getMethodName } from './entities';
 import { STORE_NAME } from './name';
 
@@ -59,10 +57,10 @@ const entityActions = defaultEntities.reduce( ( result, entity ) => {
 
 const storeConfig = {
 	reducer,
-	controls: { ...customControls, ...controls },
 	actions: { ...actions, ...entityActions, ...locksActions },
 	selectors: { ...selectors, ...entitySelectors, ...locksSelectors },
 	resolvers: { ...resolvers, ...entityResolvers },
+	__experimentalUseThunks: true,
 };
 
 /**

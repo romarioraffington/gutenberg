@@ -61,7 +61,7 @@ class WP_Theme_JSON_Gutenberg {
 			'text'       => null,
 		),
 		'dimensions' => array(
-			'height' => null,
+			'height'    => null,
 			'minHeight' => null,
 		),
 		'spacing'    => array(
@@ -99,7 +99,7 @@ class WP_Theme_JSON_Gutenberg {
 		),
 		'custom'     => null,
 		'dimensions' => array(
-			'customHeight' => null,
+			'customHeight'    => null,
 			'customMinHeight' => null,
 		),
 		'layout'     => array(

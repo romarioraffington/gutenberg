@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { check, moreHorizontal } from '@wordpress/icons';
+import { check, moreHorizontal, plus } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -28,15 +28,18 @@ const ToolsPanelHeader = ( props, forwardedRef ) => {
 		return null;
 	}
 
+	const menuItemsArray = Object.entries( menuItems );
+	const icon = menuItemsArray.some( ( [ , isSelected ] ) => isSelected ) ? moreHorizontal : plus;
+
 	return (
 		<h2 { ...headerProps } ref={ forwardedRef }>
 			{ header }
 			{ hasMenuItems && (
-				<DropdownMenu icon={ moreHorizontal } label={ menuLabel }>
+				<DropdownMenu icon={ icon } label={ menuLabel }>
 					{ ( { onClose } ) => (
 						<>
 							<MenuGroup label={ __( 'Display options' ) }>
-								{ Object.entries( menuItems ).map(
+								{ menuItemsArray.map(
 									( [ label, isSelected ] ) => {
 										return (
 											<MenuItem

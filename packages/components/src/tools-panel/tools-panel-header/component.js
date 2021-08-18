@@ -33,7 +33,10 @@ const ToolsPanelHeader = ( props, forwardedRef ) => {
 		<h2 { ...headerProps } ref={ forwardedRef }>
 			{ header }
 			{ hasMenuItems && (
-				<DropdownMenu icon={ hasSelectedMenuItems ? moreHorizontal : plus } label={ menuLabel }>
+				<DropdownMenu
+					icon={ hasSelectedMenuItems ? moreHorizontal : plus }
+					label={ menuLabel }
+				>
 					{ ( { onClose } ) => (
 						<>
 							<MenuGroup label={ __( 'Display options' ) }>

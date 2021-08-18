@@ -21,6 +21,7 @@ const ToolsPanelHeader = ( props, forwardedRef ) => {
 		menuLabel,
 		resetAll,
 		toggleItem,
+		hasSelectedMenuItems,
 		...headerProps
 	} = useToolsPanelHeader( props );
 
@@ -28,18 +29,15 @@ const ToolsPanelHeader = ( props, forwardedRef ) => {
 		return null;
 	}
 
-	const menuItemsArray = Object.entries( menuItems );
-	const icon = menuItemsArray.some( ( [ , isSelected ] ) => isSelected ) ? moreHorizontal : plus;
-
 	return (
 		<h2 { ...headerProps } ref={ forwardedRef }>
 			{ header }
 			{ hasMenuItems && (
-				<DropdownMenu icon={ icon } label={ menuLabel }>
+				<DropdownMenu icon={ hasSelectedMenuItems ? moreHorizontal : plus } label={ menuLabel }>
 					{ ( { onClose } ) => (
 						<>
 							<MenuGroup label={ __( 'Display options' ) }>
-								{ menuItemsArray.map(
+								{ Object.entries( menuItems ).map(
 									( [ label, isSelected ] ) => {
 										return (
 											<MenuItem

@@ -16,12 +16,12 @@ import { contextConnect } from '../../ui/context';
 const ToolsPanelHeader = ( props, forwardedRef ) => {
 	const {
 		hasMenuItems,
+		hasSelectedMenuItems,
 		header,
 		menuItems,
 		menuLabel,
 		resetAll,
 		toggleItem,
-		hasSelectedMenuItems,
 		...headerProps
 	} = useToolsPanelHeader( props );
 

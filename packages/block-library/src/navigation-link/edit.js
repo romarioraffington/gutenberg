@@ -291,8 +291,9 @@ const useIsInvalidLink = ( kind, type, id ) => {
 	// If either of those is true, invalidate.
 	const isInvalid =
 		isPostType && hasId && postStatus && 'trash' === postStatus;
+	const isDraft = 'draft' === postStatus;
 
-	return isInvalid;
+	return [ isInvalid, isDraft ];
 };
 
 const useMissingText = ( type, isInvalid ) => {
@@ -371,7 +372,7 @@ export default function NavigationLinkEdit( {
 	const isDraggingWithin = useIsDraggingWithin( listItemRef );
 	const itemLabelPlaceholder = __( 'Add link…' );
 	const ref = useRef();
-	const isInvalid = useIsInvalidLink( kind, type, id );
+	const [ isInvalid, isDraft ] = useIsInvalidLink( kind, type, id );
 
 	const {
 		isAtMaxNesting,
@@ -613,7 +614,7 @@ export default function NavigationLinkEdit( {
 		}
 	);
 
-	const missingText = useMissingText( type, isInvalid );
+	const missingText = useMissingText( type, isInvalid, isDraft );
 
 	return (
 		<Fragment>
@@ -688,36 +689,49 @@ export default function NavigationLinkEdit( {
 							{ missingText }
 						</div>
 					) : (
-						<RichText
-							ref={ ref }
-							identifier="label"
-							className="wp-block-navigation-link__label"
-							value={ label }
-							onChange={ ( labelValue ) =>
-								setAttributes( { label: labelValue } )
-							}
-							onMerge={ mergeBlocks }
-							onReplace={ onReplace }
-							__unstableOnSplitAtEnd={ () =>
-								insertBlocksAfter(
-									createBlock( 'core/navigation-link' )
-								)
-							}
-							aria-label={ __( 'Navigation link text' ) }
-							placeholder={ itemLabelPlaceholder }
-							withoutInteractiveFormatting
-							allowedFormats={ [
-								'core/bold',
-								'core/italic',
-								'core/image',
-								'core/strikethrough',
-							] }
-							onClick={ () => {
-								if ( ! url ) {
-									setIsLinkOpen( true );
+						<>
+							<RichText
+								ref={ ref }
+								identifier="label"
+								className="wp-block-navigation-link__label"
+								value={ label }
+								onChange={ ( labelValue ) =>
+									setAttributes( { label: labelValue } )
 								}
-							} }
-						/>
+								onMerge={ mergeBlocks }
+								onReplace={ onReplace }
+								__unstableOnSplitAtEnd={ () =>
+									insertBlocksAfter(
+										createBlock( 'core/navigation-link' )
+									)
+								}
+								aria-label={ __( 'Navigation link text' ) }
+								placeholder={ itemLabelPlaceholder }
+								withoutInteractiveFormatting
+								allowedFormats={ [
+									'core/bold',
+									'core/italic',
+									'core/image',
+									'core/strikethrough',
+								] }
+								onClick={ () => {
+									if ( ! url ) {
+										setIsLinkOpen( true );
+									}
+								} }
+							/>
+							{ isDraft && (
+								<span>
+									{ ' ' }
+									(
+									{ __(
+										/* translators: Whether or not the navigation link is invalid. */
+										'Draft'
+									) }
+									)
+								</span>
+							) }
+						</>
 					) }
 					{ isLinkOpen && (
 						<Popover

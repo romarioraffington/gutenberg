@@ -612,10 +612,12 @@ export const __experimentalBatch = ( requests ) => async ( { dispatch } ) => {
  * @param {Object} recordId ID of the record.
  * @param {Object} options  Saving options.
  */
-export const saveEditedEntityRecord = ( kind, name, recordId, options ) => ( {
-	select,
-	dispatch,
-} ) => {
+export const saveEditedEntityRecord = (
+	kind,
+	name,
+	recordId,
+	options
+) => async ( { select, dispatch } ) => {
 	if ( ! select.hasEditsForEntityRecord( kind, name, recordId ) ) {
 		return;
 	}
@@ -625,7 +627,7 @@ export const saveEditedEntityRecord = ( kind, name, recordId, options ) => ( {
 		recordId
 	);
 	const record = { id: recordId, ...edits };
-	dispatch.saveEntityRecord( kind, name, record, options );
+	return await dispatch.saveEntityRecord( kind, name, record, options );
 };
 
 /**

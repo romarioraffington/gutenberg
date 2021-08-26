@@ -390,12 +390,10 @@ export const __experimentalGetTemplateForLink = ( link ) => async ( {
 	// Also it seems the returned object is not a regular REST API post type.
 	let template;
 	try {
-		const templateResponse = await window.fetch(
-			addQueryArgs( link, {
-				'_wp-find-template': true,
-			} )
-		);
-		template = await templateResponse.json();
+		template = await window
+			.fetch( addQueryArgs( link, { '_wp-find-template': true } ) )
+			.then( ( res ) => res.json() )
+			.then( ( { data } ) => data );
 	} catch ( e ) {
 		// For non-FSE themes, it is possible that this request returns an error.
 	}
@@ -404,7 +402,6 @@ export const __experimentalGetTemplateForLink = ( link ) => async ( {
 		return;
 	}
 
-	dispatch( getEntityRecord( 'postType', 'wp_template', template.id ) );
 	const record = await resolveSelect.getEntityRecord(
 		'postType',
 		'wp_template',

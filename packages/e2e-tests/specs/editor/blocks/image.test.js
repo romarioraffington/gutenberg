@@ -97,6 +97,7 @@ describe( 'Image', () => {
 
 		expect( await getEditedPostContent() ).toMatch( regex2 );
 
+		await page.click( '[aria-label="Block: Image"] img' );
 		await clickButton( 'Replace' );
 		const filename2 = await upload(
 			'.block-editor-media-replace-flow__options input[type="file"]'

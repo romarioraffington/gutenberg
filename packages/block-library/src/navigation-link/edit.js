@@ -300,6 +300,7 @@ export default function NavigationLinkEdit( {
 	const ref = useRef();
 
 	const {
+		innerBlocks,
 		isAtMaxNesting,
 		isTopLevelLink,
 		isParentOfSelectedBlock,
@@ -311,6 +312,7 @@ export default function NavigationLinkEdit( {
 	} = useSelect(
 		( select ) => {
 			const {
+				getBlocks,
 				getClientIdsOfDescendants,
 				hasSelectedInnerBlock,
 				getSelectedBlockClientId,
@@ -323,6 +325,7 @@ export default function NavigationLinkEdit( {
 				.length;
 
 			return {
+				innerBlocks: getBlocks( clientId ),
 				isAtMaxNesting:
 					getBlockParentsByBlockName( clientId, name ).length >=
 					MAX_NESTING,
@@ -360,7 +363,11 @@ export default function NavigationLinkEdit( {
 	 * Transform to submenu block.
 	 */
 	function transformToSubmenu() {
-		const newSubmenu = createBlock( 'core/navigation-submenu', attributes );
+		const newSubmenu = createBlock(
+			'core/navigation-submenu',
+			attributes,
+			innerBlocks
+		);
 		replaceBlock( clientId, newSubmenu );
 	}
 

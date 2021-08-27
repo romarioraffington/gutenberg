@@ -660,9 +660,7 @@ export const __experimentalSaveSpecifiedEntityEdits = (
 			editsToSave[ edit ] = edits[ edit ];
 		}
 	}
-	return await dispatch(
-		saveEntityRecord( kind, name, editsToSave, options )
-	);
+	return await dispatch.saveEntityRecord( kind, name, editsToSave, options );
 };
 
 /**

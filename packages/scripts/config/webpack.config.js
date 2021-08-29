@@ -88,9 +88,6 @@ const getLiveReloadPort = ( inputPort ) => {
 const config = {
 	mode,
 	target,
-	entry: {
-		index: path.resolve( process.cwd(), 'src', 'index.js' ),
-	},
 	output: {
 		filename: '[name].js',
 		path: path.resolve( process.cwd(), 'build' ),
@@ -244,4 +241,9 @@ if ( ! isProduction ) {
 	} );
 }
 
-module.exports = config;
+module.exports = ( env ) => ( {
+	...config,
+	entry: env.entries ?? {
+		index: path.resolve( process.cwd(), 'src', 'index.js' ),
+	},
+} );

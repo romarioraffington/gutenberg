@@ -243,7 +243,7 @@ if ( ! isProduction ) {
 
 module.exports = ( env ) => ( {
 	...config,
-	entry: env.entries ?? {
+	entry: env.entries || {
 		index: path.resolve( process.cwd(), 'src', 'index.js' ),
 	},
 } );

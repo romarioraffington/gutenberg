@@ -373,7 +373,7 @@ export const saveEntityRecord = (
 	}
 	const entityIdKey = entity.key || DEFAULT_ENTITY_KEY;
 	const recordId = record[ entityIdKey ];
-	const rawBlockMarkupFields = entity.rawBlockMarkupFields || [];
+	const rawAttributes = entity.rawAttributes || [];
 
 	const lock = await dispatch(
 		__unstableAcquireStoreLock(
@@ -441,7 +441,7 @@ export const saveEntityRecord = (
 				let data = { ...persistedRecord, ...autosavePost, ...record };
 				data = Object.keys( data ).reduce(
 					( acc, key ) => {
-						if ( rawBlockMarkupFields.includes( key ) ) {
+						if ( rawAttributes.includes( key ) ) {
 							// Edits should be the "raw" attribute values.
 							acc[ key ] = get( data[ key ], 'raw', data[ key ] );
 						}
@@ -473,7 +473,7 @@ export const saveEntityRecord = (
 					newRecord = Object.keys( newRecord ).reduce(
 						( acc, key ) => {
 							// These properties are persisted in autosaves.
-							if ( rawBlockMarkupFields.includes( key ) ) {
+							if ( rawAttributes.includes( key ) ) {
 								// Edits should be the "raw" attribute values.
 								acc[ key ] = get(
 									newRecord[ key ],

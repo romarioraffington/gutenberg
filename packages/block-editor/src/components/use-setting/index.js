@@ -50,6 +50,7 @@ const deprecatedFlags = {
 };
 
 const PATHS_WITH_MERGE = {
+	'color.duotone': true,
 	'color.gradients': true,
 	'color.palette': true,
 	'typography.fontFamilies': true,
